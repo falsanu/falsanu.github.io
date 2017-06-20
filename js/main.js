@@ -38,6 +38,9 @@ function updateMenuPosition(event) {
 }
 
 function checkHand(gamma) {
+	if (gamma == 0) {
+		return currentPosition;
+	}
 	if (gamma > 0) {
 		return position[0];
 	}
