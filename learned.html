@@ -12,15 +12,17 @@
 	<link rel="stylesheet" href="css/main.css">
 	<link rel="stylesheet" type="text/css" href="css/base.css" />
 	<style>
-		#targetDiv > div > div{
+		#targetDiv>div>div {
 			display: inline;
 		}
+
 		div.text {
 			display: block !important;
 			padding-bottom: 1em;
 		}
+
 		div.selected {
-    	background-color: rgb(241, 101, 41);
+			background-color: rgb(241, 101, 41);
 		}
 	</style>
 
@@ -37,23 +39,27 @@
 	<div class="main-container">
 
 		<div class="main wrapper clearfix">
-
 			<article>
 				<header>
 					<h1>Playground :: Learned</h1>
 					<section>
-            <h2>a little playground space</h2>
-            <p class="learned">
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+						<h2>a little playground space</h2>
+
+						<p class="learned">
+							Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+							in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 						</p>
-            <p class="learned">
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+						<p class="learned">
+							Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+							in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 						</p>
-            <p class="learned">
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+						<p class="learned">
+							Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+							in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 						</p>
-            <p class="learned">
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+						<p class="learned">
+							Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+							in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 						</p>
 						<div id="targetDiv"></div>
 					</section>
@@ -61,6 +67,18 @@
 
 					</footer>
 			</article>
+			<aside>
+				<div id="statistics">
+					<div id="percentage">
+
+					</div>
+					<h2>Known words</h2>
+					<a href="javascript:clearStorage()">clear Store</a>
+					<ul id="knownWords">
+
+					</ul>
+				</div>
+			</aside>
 		</div>
 		<!-- #main -->
 	</div>
@@ -73,26 +91,88 @@
 	</div>
 	<script>
 		const el = document.querySelectorAll('.learned');
-		let target = document.getElementById('targetDiv')
-		el.forEach((el)=>{
-			let out = document.createElement('div');
-			out.classList.add('text')
-			const text = el.innerHTML;
+		let target = document.getElementById('targetDiv');
+		let statsDif = document.getElementById('statistics');
+		let knownWordsDiv = document.getElementById('knownWords');
+		// let knownWords = getFromStorage();
 
-			text.split(' ').map((el)=>{
-				let div = document.createElement('div');
-
-				var newContent = document.createTextNode(`${el} `);
-	  		div.appendChild(newContent); // füge den Textknoten zum neu erstellten div hinzu.
-				div.addEventListener('click', (el)=>{
-					el.target.classList.toggle('selected')
-				});
-				out.appendChild(div);
-				target.appendChild(out);
+		let updateStats = () => {
+			// write known words
+			knownWordsDiv.querySelectorAll('li').forEach((el) => {
+				el.parentNode.removeChild(el)
 			});
-			el.parentNode.removeChild(el);
-		});
+			knownWords.forEach((word) => {
+				let wordElement = document.createElement('li');
+				knownWordsDiv.appendChild(wordElement);
+				wordElement.innerHTML = word;
+			})
+		}
+		let saveInStorage = (knownWords) => {
+			localStorage.setItem('knownWords', JSON.stringify(knownWords));
+		}
+		let getFromStorage = () => {
+			return JSON.parse(localStorage.getItem('knownWords'));
+		}
+		let clearStorage = () => {
+			localStorage.removeItem('knownWords');
+			knownWords = [];
+			document.querySelectorAll('.selected').forEach((el)=>{el.classList.remove('selected')});
+			updateStats();
+		}
+		let knownWords = getFromStorage() || [];
 
+		function init() {
+
+
+
+			el.forEach((el) => {
+				let out = document.createElement('div');
+				out.classList.add('text')
+				const text = el.innerHTML;
+
+				text.split(' ').map((el) => {
+					let div = document.createElement('div');
+					let selector = el.trim().replace(/[$,.\s]/g, '');
+					div.classList.add(selector);
+					var newContent = document.createTextNode(`${el} `);
+
+					if(knownWords.indexOf(selector) > -1) {
+						div.classList.add('selected');
+					}
+
+					div.appendChild(newContent); // füge den Textknoten zum neu erstellten div hinzu.
+
+					div.addEventListener('click', (el) => {
+						let selector = el.target.innerHTML.trim().replace(/[$,.\s]/g, '');
+						let isKnown = false;
+						document.querySelectorAll(`.${selector}`).forEach((elem) => {
+							elem.classList.toggle('selected')
+							if (elem.classList.contains('selected')) {
+								isKnown = true;
+							} else {
+								isKnown = false;
+							}
+						});
+
+						if (isKnown) {
+							knownWords.push(selector);
+							saveInStorage(knownWords);
+						} else {
+							const index = knownWords.indexOf(selector);
+							if (index > -1) {
+								knownWords.splice(index, 1);
+							}
+						}
+						updateStats();
+					});
+					out.appendChild(div);
+					target.appendChild(out);
+				});
+				el.parentNode.removeChild(el);
+			});
+			updateStats();
+		}
+		init();
 	</script>
 </body>
 
